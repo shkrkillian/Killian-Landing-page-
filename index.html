@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Killian Pavilla — Créateur de contenu lifestyle masculin. Mode, skincare & culture. Île-de-France." />
+  <title>Killian Pavilla — Lifestyle Creator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f5f3;
+      --gray-100: #e8e8e6;
+      --gray-200: #c8c8c6;
+      --gray-400: #888886;
+      --gray-600: #555553;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+      --transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      --section-pad: clamp(80px, 12vw, 160px) clamp(24px, 6vw, 80px);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ─── CUSTOM CURSOR ────────────────────────────────────── */
+    .cursor {
+      position: fixed;
+      top: 0; left: 0;
+      width: 12px; height: 12px;
+      background: var(--white);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+      mix-blend-mode: difference;
+    }
+
+    .cursor-follower {
+      position: fixed;
+      top: 0; left: 0;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(245,245,243,0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.4s ease, width 0.3s ease, height 0.3s ease;
+    }
+
+    body:hover .cursor { opacity: 1; }
+
+    /* ─── SCROLL ANIMATIONS ────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s var(--transition), transform 0.8s var(--transition);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ─── NAVIGATION ───────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px clamp(24px, 6vw, 80px);
+      transition: background 0.4s ease, padding 0.4s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding-top: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-logo span { font-style: italic; }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray-200);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--white);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--white);
+      padding: 10px 22px;
+      text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .nav-cta:hover {
+      background: var(--gray-200);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px; height: 1px;
+      background: var(--white);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .hamburger.active span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      z-index: 99;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .mobile-menu a:hover { color: var(--gray-400); }
+
+    /* ─── HERO ─────────────────────────────────────────────── */
+    #hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--section-pad);
+      padding-top: 120px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--serif);
+      font-size: clamp(80px, 20vw, 260px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.025);
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 1s 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 10vw, 9rem);
+      font-weight: 300;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 1s 0.5s forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gray-200);
+    }
+
+    .hero-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 40px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 1s 0.8s forwards;
+    }
+
+    .hero-tagline {
+      max-width: 380px;
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      font-weight: 300;
+      color: var(--gray-200);
+      line-height: 1.5;
+      font-style: italic;
+      font-family: var(--serif);
+    }
+
+    .hero-tagline strong {
+      font-style: normal;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .btn {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      text-decoration: none;
+      border: 1px solid var(--white);
+      color: var(--white);
+      transition: background 0.3s ease, color 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .btn-fill {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .btn-fill:hover {
+      background: var(--gray-200);
+      border-color: var(--gray-200);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s 1.4s forwards;
+    }
+
+    .hero-scroll span {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--gray-400), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ─── DIVIDER ──────────────────────────────────────────── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.12), transparent);
+    }
+
+    /* ─── SECTION BASE ─────────────────────────────────────── */
+    section {
+      padding: var(--section-pad);
+    }
+
+    .section-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 60px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    .section-title em { font-style: italic; color: var(--gray-200); }
+
+    /* ─── ABOUT ────────────────────────────────────────────── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 6vw, 100px);
+      align-items: start;
+    }
+
+    .about-left {}
+
+    .about-right {
+      padding-top: 20px;
+    }
+
+    .about-text {
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      line-height: 1.85;
+      color: var(--gray-200);
+      margin-bottom: 24px;
+    }
+
+    .about-text strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .about-badge {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 8px 18px;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-top: 20px;
+    }
+
+    .about-quote {
+      border-left: 1px solid var(--white);
+      padding: 20px 0 20px 28px;
+      margin: 40px 0;
+      font-family: var(--serif);
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.4;
+      color: var(--white);
+    }
+
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 32px;
+    }
+
+    .tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 7px 16px;
+      color: var(--gray-200);
+      transition: border-color 0.3s ease, color 0.3s ease;
+    }
+
+    .tag:hover { border-color: var(--white); color: var(--white); }
+
+    /* ─── SERVICES ─────────────────────────────────────────── */
+    #services { background: var(--white); color: var(--black); }
+
+    #services .section-label { color: rgba(10,10,10,0.4); }
+    #services .section-label::after { background: rgba(10,10,10,0.12); }
+    #services .section-title { color: var(--black); }
+    #services .section-title em { color: var(--gray-600); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+      margin-top: 64px;
+      background: rgba(10,10,10,0.08);
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: clamp(36px, 4vw, 56px);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s ease;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--black);
+      transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .service-card:hover::before { transform: translateY(0); }
+
+    .service-card:hover .service-number,
+    .service-card:hover .service-name,
+    .service-card:hover .service-desc,
+    .service-card:hover .service-detail { color: var(--white); }
+
+    .service-card:hover .service-sep { border-color: rgba(255,255,255,0.15); }
+
+    .service-number {
+      position: relative;
+      font-family: var(--serif);
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: rgba(10,10,10,0.1);
+      line-height: 1;
+      margin-bottom: 24px;
+      transition: color 0.4s ease;
+    }
+
+    .service-name {
+      position: relative;
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+      transition: color 0.4s ease;
+    }
+
+    .service-sep {
+      position: relative;
+      border: none;
+      border-top: 1px solid rgba(10,10,10,0.12);
+      margin: 20px 0;
+      transition: border-color 0.4s ease;
+    }
+
+    .service-desc {
+      position: relative;
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--gray-600);
+      margin-bottom: 20px;
+      transition: color 0.4s ease;
+    }
+
+    .service-detail {
+      position: relative;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(10,10,10,0.3);
+      transition: color 0.4s ease;
+    }
+
+    /* ─── CHIFFRES ─────────────────────────────────────────── */
+    #chiffres {}
+
+    .stats-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-bottom: 80px;
+    }
+
+    .stats-subtitle {
+      max-width: 320px;
+      font-size: 0.9rem;
+      color: var(--gray-400);
+      line-height: 1.7;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .stat-card {
+      background: var(--black);
+      padding: clamp(36px, 4vw, 60px) clamp(28px, 3vw, 48px);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: border-color 0.3s ease;
+    }
+
+    .stat-card:hover { border-color: rgba(255,255,255,0.2); }
+
+    .stat-platform {
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stat-platform-icon {
+      width: 20px; height: 20px;
+      fill: none;
+      stroke: var(--gray-400);
+      stroke-width: 1.5;
+    }
+
+    .stat-number {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray-600);
+    }
+
+    .stat-growth {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 16px;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+    }
+
+    /* ─── COLLABORATIONS ───────────────────────────────────── */
+    #collaborations { background: rgba(255,255,255,0.02); }
+
+    .collabs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .collab-card {
+      background: #0d0d0d;
+      padding: clamp(36px, 4vw, 60px);
+      border: 1px solid transparent;
+      transition: border-color 0.4s ease, background 0.4s ease;
+    }
+
+    .collab-card:hover {
+      border-color: rgba(255,255,255,0.12);
+      background: #111;
+    }
+
+    .collab-icon {
+      font-size: 2rem;
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .collab-name {
+      font-family: var(--serif);
+      font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+
+    .collab-desc {
+      font-size: 0.88rem;
+      line-height: 1.8;
+      color: var(--gray-400);
+    }
+
+    .collab-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 28px;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .collab-cta:hover { color: var(--white); }
+
+    .collab-cta::after {
+      content: '→';
+      transition: transform 0.3s ease;
+    }
+
+    .collab-cta:hover::after { transform: translateX(4px); }
+
+    .collab-intro {
+      max-width: 600px;
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      color: var(--gray-200);
+      line-height: 1.8;
+      font-family: var(--serif);
+      font-style: italic;
+      margin-top: 32px;
+    }
+
+    /* ─── CONTACT ──────────────────────────────────────────── */
+    #contact {
+      background: var(--white);
+      color: var(--black);
+      text-align: center;
+      padding: clamp(100px, 14vw, 200px) clamp(24px, 6vw, 80px);
+    }
+
+    #contact .section-label { justify-content: center; color: rgba(10,10,10,0.4); }
+    #contact .section-label::after { display: none; }
+
+    .contact-title {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin: 32px 0;
+    }
+
+    .contact-title em { font-style: italic; color: var(--gray-600); }
+
+    .contact-email {
+      display: inline-block;
+      font-family: var(--serif);
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-weight: 300;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(10,10,10,0.3);
+      padding-bottom: 4px;
+      margin-bottom: 60px;
+      transition: border-color 0.3s ease;
+    }
+
+    .contact-email:hover { border-color: var(--black); }
+
+    .contact-socials {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 36px;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+
+    .social-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--black);
+      transition: opacity 0.3s ease;
+    }
+
+    .social-link:hover { opacity: 0.5; }
+
+    .social-link span {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .social-icon {
+      width: 40px; height: 40px;
+      border: 1px solid rgba(10,10,10,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .social-icon svg {
+      width: 16px; height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+    }
+
+    .contact-divider {
+      width: 1px;
+      height: 48px;
+      background: rgba(10,10,10,0.15);
+    }
+
+    .contact-btn-wrap {
+      margin-top: 20px;
+    }
+
+    .btn-dark {
+      border-color: var(--black);
+      color: var(--black);
+    }
+
+    .btn-dark:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    /* ─── FOOTER ───────────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      padding: 36px clamp(24px, 6vw, 80px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: var(--white);
+    }
+
+    .footer-copy {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--gray-600);
+    }
+
+    /* ─── MARQUEE ──────────────────────────────────────────── */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 20px 0;
+      background: rgba(255,255,255,0.015);
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 28s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-item {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.2);
+      padding: 0 60px;
+      white-space: nowrap;
+    }
+
+    .marquee-item span {
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      margin: 0 30px;
+      vertical-align: middle;
+    }
+
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ─── RESPONSIVE ───────────────────────────────────────── */
+    @media (max-width: 900px) {
+      #about {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .collabs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+
+      body { cursor: auto; }
+      .cursor, .cursor-follower { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-bottom { flex-direction: column; align-items: flex-start; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .contact-socials { gap: 24px; }
+      .contact-divider { display: none; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">Killian <span>Pavilla</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#chiffres">Audience</a></li>
+      <li><a href="#collaborations">Collabs</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Me contacter</a>
+    <div class="hamburger" id="hamburger" role="button" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" class="mobile-nav-link">À propos</a>
+    <a href="#services" class="mobile-nav-link">Services</a>
+    <a href="#chiffres" class="mobile-nav-link">Audience</a>
+    <a href="#collaborations" class="mobile-nav-link">Collabs</a>
+    <a href="#contact" class="mobile-nav-link">Contact</a>
+  </div>
+
+  <!-- ─── HERO ─── -->
+  <section id="hero">
+    <div class="hero-bg-text" aria-hidden="true">KP</div>
+
+    <p class="hero-eyebrow">Créateur de contenu · Île-de-France</p>
+
+    <h1 class="hero-title">
+      Killian<br><em>Pavilla</em>
+    </h1>
+
+    <div class="hero-bottom">
+      <p class="hero-tagline">
+        <strong>Mode. Skincare. Culture.</strong><br>
+        L'authenticité comme signature, le 93 comme ADN.
+      </p>
+      <a href="#contact" class="btn">Travailler ensemble</a>
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-item">Mode Masculine <span></span></div>
+      <div class="marquee-item">Skincare Routine <span></span></div>
+      <div class="marquee-item">Lifestyle 93 <span></span></div>
+      <div class="marquee-item">Content Creation <span></span></div>
+      <div class="marquee-item">Personal Branding <span></span></div>
+      <div class="marquee-item">Culture Urbaine <span></span></div>
+      <!-- Duplicate for seamless loop -->
+      <div class="marquee-item">Mode Masculine <span></span></div>
+      <div class="marquee-item">Skincare Routine <span></span></div>
+      <div class="marquee-item">Lifestyle 93 <span></span></div>
+      <div class="marquee-item">Content Creation <span></span></div>
+      <div class="marquee-item">Personal Branding <span></span></div>
+      <div class="marquee-item">Culture Urbaine <span></span></div>
+    </div>
+  </div>
+
+  <!-- ─── ABOUT ─── -->
+  <section id="about">
+    <div class="about-left reveal">
+      <p class="section-label">01 — À propos</p>
+      <h2 class="section-title">
+        Un créateur<br><em>ancré dans<br>son époque</em>
+      </h2>
+      <div class="about-quote reveal reveal-delay-2">
+        « Le style, ce n'est pas ce que tu portes — c'est comment tu le racontes. »
+      </div>
+      <div class="about-tags reveal reveal-delay-3">
+        <span class="tag">Mode</span>
+        <span class="tag">Skincare</span>
+        <span class="tag">Culture</span>
+        <span class="tag">Île-de-France</span>
+        <span class="tag">Seine-Saint-Denis</span>
+        <span class="tag">Journalisme</span>
+      </div>
+    </div>
+
+    <div class="about-right">
+      <p class="about-text reveal reveal-delay-1">
+        Je suis <strong>Killian Pavilla</strong>, créateur de contenu lifestyle masculin basé en <strong>Île-de-France</strong>. Mon univers se situe à l'intersection de trois piliers : la <strong>mode</strong>, le <strong>skincare</strong> et la <strong>culture</strong> — trois domaines que j'explore avec une authenticité sans compromis.
+      </p>
+      <p class="about-text reveal reveal-delay-2">
+        Grandi dans le <strong>93</strong>, Seine-Saint-Denis, je porte cet ancrage comme une fierté. C'est là que j'ai forgé mon regard sur le monde, développé mon esthétique et construit mon rapport à la création. Mon contenu n'est pas une mise en scène — c'est une fenêtre ouverte sur qui je suis vraiment.
+      </p>
+      <p class="about-text reveal reveal-delay-3">
+        Passionné par l'écriture et la narration, je me prépare à devenir <strong>journaliste</strong>. Cette ambition nourrit ma façon de créer : chaque vidéo, chaque post est une histoire à raconter, un point de vue à défendre, une voix à amplifier.
+      </p>
+      <span class="about-badge reveal reveal-delay-4">Île-de-France · 93 · Journaliste en devenir</span>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── SERVICES ─── -->
+  <section id="services">
+    <p class="section-label reveal">02 — Services</p>
+    <h2 class="section-title reveal reveal-delay-1">
+      Ce que je<br><em>construis</em>
+    </h2>
+
+    <div class="services-grid">
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-number">01</div>
+        <h3 class="service-name">Personal Branding</h3>
+        <hr class="service-sep">
+        <p class="service-desc">
+          Je t'aide à définir, structurer et rayonner ton identité personnelle en ligne. Positionnement éditorial, ligne visuelle, voix de marque — tout est pensé pour que tu sois reconnaissable et mémorable dans ton secteur.
+        </p>
+        <span class="service-detail">Stratégie · Identité · Positionnement</span>
+      </div>
+
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-number">02</div>
+        <h3 class="service-name">Content Creation</h3>
+        <hr class="service-sep">
+        <p class="service-desc">
+          Production de contenu sur-mesure pour les réseaux sociaux : TikTok, Instagram Reels, YouTube Shorts. Des formats pensés pour capter l'attention, générer de l'engagement et raconter une histoire vraie.
+        </p>
+        <span class="service-detail">TikTok · Instagram · Reels · Shorts</span>
+      </div>
+
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-number">03</div>
+        <h3 class="service-name">Conseil Éditorial</h3>
+        <hr class="service-sep">
+        <p class="service-desc">
+          Accompagnement pour définir ta stratégie de contenu, construire un calendrier éditorial cohérent et créer des récits qui font sens pour ta communauté. L'authenticité au service de la performance.
+        </p>
+        <span class="service-detail">Stratégie · Planning · Narration</span>
+      </div>
+
+      <div class="service-card reveal reveal-delay-4">
+        <div class="service-number">04</div>
+        <h3 class="service-name">Image & Style</h3>
+        <hr class="service-sep">
+        <p class="service-desc">
+          Direction créative de tes prises de vue, shooting lifestyle et lookbooks. Un regard affûté par des années d'exploration des codes de la mode masculine et du skincare de haute qualité.
+        </p>
+        <span class="service-detail">Direction artistique · Shooting · Mode</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CHIFFRES ─── -->
+  <section id="chiffres">
+    <div class="stats-header">
+      <div>
+        <p class="section-label reveal">03 — Audience</p>
+        <h2 class="section-title reveal reveal-delay-1">
+          Une communauté<br><em>qui grandit</em>
+        </h2>
+      </div>
+      <p class="stats-subtitle reveal reveal-delay-2">
+        Une audience engagée, principalement masculine, sensible à la mode, au soin et à la culture urbaine francilienne.
+      </p>
+    </div>
+
+    <div class="stats-grid">
+      <!-- TikTok -->
+      <div class="stat-card reveal reveal-delay-1">
+        <div class="stat-platform">
+          <svg class="stat-platform-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+          </svg>
+          TikTok
+        </div>
+        <div class="stat-number">2 455</div>
+        <div class="stat-label">Abonnés</div>
+        <div class="stat-growth">↑ En croissance · @killian.pvll</div>
+      </div>
+
+      <!-- Instagram -->
+      <div class="stat-card reveal reveal-delay-2">
+        <div class="stat-platform">
+          <svg class="stat-platform-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+          </svg>
+          Instagram
+        </div>
+        <div class="stat-number">2 950</div>
+        <div class="stat-label">Abonnés</div>
+        <div class="stat-growth">↑ Engagement fort · @killian.pvll</div>
+      </div>
+
+      <!-- Dailymotion -->
+      <div class="stat-card reveal reveal-delay-3">
+        <div class="stat-platform">
+          <svg class="stat-platform-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polygon points="10,8 16,12 10,16" fill="currentColor"/>
+          </svg>
+          Dailymotion
+        </div>
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Présence vidéo</div>
+        <div class="stat-growth">→ Contenu long format · Killian Pvll</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── COLLABORATIONS ─── -->
+  <section id="collaborations">
+    <p class="section-label reveal">04 — Collaborations</p>
+    <h2 class="section-title reveal reveal-delay-1">
+      Construisons<br><em>ensemble</em>
+    </h2>
+    <p class="collab-intro reveal reveal-delay-2">
+      Je suis ouvert à des partenariats authentiques avec des marques qui partagent mes valeurs — élégance, authenticité et ancrage culturel.
+    </p>
+
+    <div class="collabs-grid" style="margin-top: 64px;">
+      <div class="collab-card reveal reveal-delay-1">
+        <span class="collab-icon" aria-hidden="true">◻</span>
+        <h3 class="collab-name">Gifting & Test Produit</h3>
+        <p class="collab-desc">
+          Je reçois tes produits et les intègre naturellement à mon contenu quotidien. Unboxing, retours honnêtes, intégration en skincare routine ou tenue du jour — ton produit présenté avec ma signature.
+        </p>
+        <a href="#contact" class="collab-cta">Proposer un gifting</a>
+      </div>
+
+      <div class="collab-card reveal reveal-delay-2">
+        <span class="collab-icon" aria-hidden="true">◈</span>
+        <h3 class="collab-name">Contenu Sponsorisé</h3>
+        <p class="collab-desc">
+          Création de contenu dédié à ta marque : vidéos TikTok, Reels Instagram, stories. Format pensé pour ton audience, ton message, ta vision — avec mon style éditorial comme valeur ajoutée.
+        </p>
+        <a href="#contact" class="collab-cta">Demander un devis</a>
+      </div>
+
+      <div class="collab-card reveal reveal-delay-3">
+        <span class="collab-icon" aria-hidden="true">◇</span>
+        <h3 class="collab-name">Événements & Presse</h3>
+        <p class="collab-desc">
+          Présence à tes soirées de lancement, pop-ups, défilés ou présentations de collection. Couverture en temps réel, contenu live, amplification organique sur mes réseaux.
+        </p>
+        <a href="#contact" class="collab-cta">M'inviter à un événement</a>
+      </div>
+
+      <div class="collab-card reveal reveal-delay-4">
+        <span class="collab-icon" aria-hidden="true">◉</span>
+        <h3 class="collab-name">Shooting & Direction</h3>
+        <p class="collab-desc">
+          Shooting lifestyle pour ta marque avec moi comme modèle et directeur artistique. Lookbooks, campagnes digitales, visuels réseaux sociaux — une esthétique noire & blanche, minimaliste et forte.
+        </p>
+        <a href="#contact" class="collab-cta">Planifier un shooting</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact">
+    <p class="section-label reveal">05 — Contact</p>
+    <h2 class="contact-title reveal reveal-delay-1">
+      Parlons de<br><em>ton projet</em>
+    </h2>
+
+    <a href="mailto:killian.pavilla@gmail.com" class="contact-email reveal reveal-delay-2">
+      killian.pavilla@gmail.com
+    </a>
+
+    <div class="contact-socials reveal reveal-delay-3">
+      <!-- TikTok -->
+      <a href="https://www.tiktok.com/@killian.pvll" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">
+        <div class="social-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+          </svg>
+        </div>
+        <span>TikTok</span>
+      </a>
+
+      <div class="contact-divider" aria-hidden="true"></div>
+
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/killian.pvll" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+        <div class="social-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+          </svg>
+        </div>
+        <span>Instagram</span>
+      </a>
+
+      <div class="contact-divider" aria-hidden="true"></div>
+
+      <!-- Dailymotion -->
+      <a href="https://www.dailymotion.com/killian-pvll" target="_blank" rel="noopener" class="social-link" aria-label="Dailymotion">
+        <div class="social-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polygon points="10,8 16,12 10,16" fill="currentColor"/>
+          </svg>
+        </div>
+        <span>Dailymotion</span>
+      </a>
+    </div>
+
+    <div class="contact-btn-wrap reveal reveal-delay-4">
+      <a href="mailto:killian.pavilla@gmail.com" class="btn btn-dark">Envoyer un email</a>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <span class="footer-brand">Killian Pavilla</span>
+    <span class="footer-copy">© 2024 — Tous droits réservés · Île-de-France, France</span>
+  </footer>
+
+  <!-- ─── SCRIPTS ─── -->
+  <script>
+    // Custom Cursor
+    const cursor = document.getElementById('cursor');
+    const follower = document.getElementById('cursorFollower');
+    let mouseX = 0, mouseY = 0;
+    let followerX = 0, followerY = 0;
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top  = mouseY + 'px';
+    });
+
+    (function animateFollower() {
+      followerX += (mouseX - followerX) * 0.12;
+      followerY += (mouseY - followerY) * 0.12;
+      follower.style.left = followerX + 'px';
+      follower.style.top  = followerY + 'px';
+      requestAnimationFrame(animateFollower);
+    })();
+
+    document.querySelectorAll('a, button, .service-card, .collab-card, .stat-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.width  = '20px';
+        cursor.style.height = '20px';
+        follower.style.width  = '60px';
+        follower.style.height = '60px';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.width  = '12px';
+        cursor.style.height = '12px';
+        follower.style.width  = '36px';
+        follower.style.height = '36px';
+      });
+    });
+
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // Counter animation for stats
+    function animateCounter(el, target, suffix = '') {
+      const duration = 1800;
+      const start = performance.now();
+      const isInfinity = target === '∞';
+
+      if (isInfinity) return;
+
+      const num = parseInt(target.replace(/\s/g, ''), 10);
+
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(eased * num);
+        el.textContent = current.toLocaleString('fr-FR') + suffix;
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const statObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const raw = el.textContent.trim();
+          if (raw !== '∞') animateCounter(el, raw);
+          statObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    statNumbers.forEach(el => statObserver.observe(el));
+
+    // Parallax on hero bg text (subtle)
+    const heroBg = document.querySelector('.hero-bg-text');
+    window.addEventListener('scroll', () => {
+      if (heroBg) {
+        heroBg.style.transform = `translate(-50%, calc(-50% + ${window.scrollY * 0.15}px))`;
+      }
+    }, { passive: true });
+  </script>
+</body>
+</html>
