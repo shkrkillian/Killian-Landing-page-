@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV — Killian Pavilla</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #b8913a;
+      --gold-light: #c9a04d;
+      --black: #1a1a1a;
+      --dark: #2d2d2d;
+      --gray: #555;
+      --light-gray: #888;
+      --border: #d4b870;
+    }
+
+    /* ─── PAGE SETUP ─────────────────────────────────────────── */
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    html, body {
+      width: 210mm;
+      height: 297mm;
+      margin: 0 auto;
+      background: #fff;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 8.5pt;
+      line-height: 1.4;
+      color: var(--black);
+      background: #fff;
+    }
+
+    /* ─── CV WRAPPER ─────────────────────────────────────────── */
+    .cv {
+      width: 210mm;
+      height: 297mm;
+      padding: 9mm 13mm 8mm 13mm;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      overflow: hidden;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────────────── */
+    .header {
+      display: flex;
+      align-items: stretch;
+      border: 2px solid var(--black);
+      margin-bottom: 7mm;
+      min-height: 22mm;
+    }
+
+    .header-name {
+      padding: 5mm 7mm;
+      border-right: 2px solid var(--black);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 48mm;
+    }
+
+    .header-name .first-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 20pt;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--black);
+      line-height: 1.1;
+    }
+
+    .header-name .last-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 20pt;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--gold);
+      line-height: 1.1;
+    }
+
+    .header-name .title {
+      font-style: italic;
+      font-size: 7.5pt;
+      color: var(--gray);
+      margin-top: 3px;
+      letter-spacing: 0.02em;
+    }
+
+    .header-contact {
+      padding: 5mm 7mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 8pt;
+      color: var(--dark);
+    }
+
+    .contact-icon {
+      font-size: 9pt;
+      width: 12px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    /* ─── SECTION ────────────────────────────────────────────── */
+    .section {
+      margin-bottom: 5mm;
+    }
+
+    .section-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 9.5pt;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+      border-bottom: 1.5px solid var(--black);
+      padding-bottom: 2px;
+      margin-bottom: 4mm;
+    }
+
+    /* ─── PROFIL ─────────────────────────────────────────────── */
+    .profil-text {
+      font-size: 8.5pt;
+      line-height: 1.5;
+      color: var(--dark);
+    }
+
+    /* ─── EXPÉRIENCES ────────────────────────────────────────── */
+    .exp-item {
+      margin-bottom: 4mm;
+    }
+
+    .exp-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .exp-header {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0;
+      margin-bottom: 1mm;
+    }
+
+    .exp-role {
+      font-size: 9pt;
+      font-weight: 600;
+      color: var(--black);
+    }
+
+    .exp-sep {
+      font-size: 9pt;
+      color: var(--light-gray);
+      margin: 0 5px;
+    }
+
+    .exp-company {
+      font-size: 9pt;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .exp-meta {
+      font-style: italic;
+      font-size: 7.5pt;
+      color: var(--light-gray);
+      margin-bottom: 1.5mm;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      padding: 0;
+    }
+
+    .exp-bullets li {
+      font-size: 8pt;
+      color: var(--dark);
+      line-height: 1.45;
+      padding-left: 10px;
+      position: relative;
+      margin-bottom: 1px;
+    }
+
+    .exp-bullets li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-size: 9pt;
+    }
+
+    /* ─── FORMATION ──────────────────────────────────────────── */
+    .formation-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1.5px solid var(--black);
+    }
+
+    .formation-item {
+      padding: 4mm 5mm;
+      border-right: 1.5px solid var(--black);
+      text-align: center;
+    }
+
+    .formation-item:last-child {
+      border-right: none;
+    }
+
+    .formation-degree {
+      font-size: 8pt;
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 2px;
+      line-height: 1.3;
+    }
+
+    .formation-school {
+      font-size: 7pt;
+      color: var(--gray);
+      line-height: 1.3;
+      margin-bottom: 1px;
+    }
+
+    .formation-year {
+      font-style: italic;
+      font-size: 7pt;
+      color: var(--light-gray);
+    }
+
+    /* ─── COMPÉTENCES ────────────────────────────────────────── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border: 1.5px solid var(--black);
+    }
+
+    .skill-cell {
+      padding: 2.5mm 3mm;
+      border-right: 1.5px solid var(--black);
+      border-bottom: 1.5px solid var(--black);
+      text-align: center;
+      font-size: 7.5pt;
+      color: var(--dark);
+    }
+
+    .skill-cell:nth-child(5n) {
+      border-right: none;
+    }
+
+    .skill-cell:nth-child(n+6) {
+      border-bottom: none;
+    }
+
+    /* ─── LANGUES ────────────────────────────────────────────── */
+    .langues-row {
+      display: flex;
+      gap: 12mm;
+      align-items: center;
+    }
+
+    .langue-item {
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+    }
+
+    .langue-name {
+      font-weight: 600;
+      font-size: 8.5pt;
+      color: var(--black);
+    }
+
+    .langue-level {
+      font-size: 8pt;
+      color: var(--gray);
+    }
+
+    /* ─── PRINT ──────────────────────────────────────────────── */
+    @media print {
+      html, body {
+        width: 210mm;
+        height: 297mm;
+        margin: 0;
+      }
+
+      .cv {
+        width: 210mm;
+        height: 297mm;
+        page-break-after: avoid;
+      }
+
+      * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+
+    /* ─── SCREEN PREVIEW ─────────────────────────────────────── */
+    @media screen {
+      body {
+        background: #e0e0e0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px;
+        min-height: 100vh;
+        width: auto;
+        height: auto;
+      }
+
+      .cv {
+        box-shadow: 0 4px 30px rgba(0,0,0,0.25);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cv">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-name">
+        <div class="first-name">KILLIAN</div>
+        <div class="last-name">PAVILLA</div>
+        <div class="title">Conseiller de Vente Mode &amp; Luxe</div>
+      </div>
+      <div class="header-contact">
+        <div class="contact-item">
+          <span class="contact-icon">📍</span>
+          <span>Région parisienne, Île-de-France</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">📞</span>
+          <span>06 24 03 62 94</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">✉</span>
+          <span>pavillakillian2@gmail.com</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFIL -->
+    <div class="section">
+      <div class="section-title">Profil</div>
+      <p class="profil-text">
+        Professionnel de la vente mode et du luxe, avec une expérience terrain en environnement premium (Citadium Paris, Dubaï).
+        Créateur de contenu et mannequin avec références incluant Nike, Boucheron et Rabanne. Co-fondateur d'une agence de personal branding,
+        alliant expertise produit et relation client. Landing page&nbsp;: shkrkillian.github.io/Killian-Landing-page-
+      </p>
+    </div>
+
+    <!-- EXPÉRIENCES PROFESSIONNELLES -->
+    <div class="section">
+      <div class="section-title">Expériences Professionnelles</div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">Commercial luxe &amp; relations clientèle VIP</span>
+          <span class="exp-sep"> — </span>
+          <span class="exp-company">Luxury Yachts Rental</span>
+        </div>
+        <div class="exp-meta">Mai – Novembre 2022 &nbsp;|&nbsp; Dubaï, EAU</div>
+        <ul class="exp-bullets">
+          <li>Prospection et acquisition de clients haut de gamme dans le tourisme de luxe international</li>
+          <li>Argumentation des offres de location de yachts de luxe, gestion des objections et closing</li>
+          <li>Accompagnement VIP dans l'organisation d'événements privés haut de gamme</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">Conseiller de vente mode</span>
+          <span class="exp-sep"> — </span>
+          <span class="exp-company">Citadium</span>
+        </div>
+        <div class="exp-meta">Août 2023 – Août 2025 (dont 1 an en alternance) &nbsp;|&nbsp; Paris 75</div>
+        <ul class="exp-bullets">
+          <li>Conseil client en environnement mode à fort trafic, approche personnalisée et accompagnement client</li>
+          <li>Objectifs de vente individuels de 4 000 à 5 000 € de CA journalier</li>
+          <li>Fidélisation client via programme Citadium, contribution mesurable au portefeuille</li>
+          <li>Merchandising et mise en valeur visuelle des collections</li>
+          <li>Gestion quotidienne : encaissement, réassort et organisation surface de vente</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">Hôte d'accueil événementiel</span>
+          <span class="exp-sep"> — </span>
+          <span class="exp-company">Florence Doré</span>
+        </div>
+        <div class="exp-meta">Novembre 2025 – Aujourd'hui &nbsp;|&nbsp; Paris</div>
+        <ul class="exp-bullets">
+          <li>Accueil et accompagnement des invités lors d'événements prestigieux : Roland Garros, cérémonies Dior, Chanel, Miu Miu</li>
+          <li>Représentation de l'image des marques, gestion du protocole et veille au bon déroulement des événements</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">Projets personnels &amp; création</span>
+          <span class="exp-sep"> — </span>
+          <span class="exp-company">Indépendant</span>
+        </div>
+        <div class="exp-meta">2023 – Aujourd'hui &nbsp;|&nbsp; Paris</div>
+        <ul class="exp-bullets">
+          <li>Création de contenus mode et culture sur les réseaux sociaux</li>
+          <li>Co-fondateur d'une agence de personal branding : image, stratégie éditoriale et identité visuelle</li>
+          <li>Mannequin chez Mmanagement : campagnes publicitaires pour Nike, Boucheron et Rabanne, shootings éditoriaux et défilés</li>
+          <li>Présidence d'une association (Saint-Denis) : gestion de projet et mobilisation citoyenne</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FORMATION -->
+    <div class="section">
+      <div class="section-title">Formation</div>
+      <div class="formation-grid">
+        <div class="formation-item">
+          <div class="formation-degree">Bachelor Marketing du Luxe et de la Mode</div>
+          <div class="formation-school">ICFM Paris 75008</div>
+          <div class="formation-year">Juillet 2024</div>
+        </div>
+        <div class="formation-item">
+          <div class="formation-degree">BTS Commerce International</div>
+          <div class="formation-school">Lycée Jean Jacques Rousseau, Sarcelles</div>
+          <div class="formation-year">Juillet 2023</div>
+        </div>
+        <div class="formation-item">
+          <div class="formation-degree">Baccalauréat STMG</div>
+          <div class="formation-school">Lycée Maurice Utrillo, Stains</div>
+          <div class="formation-year">Juillet 2021</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPÉTENCES CLÉS -->
+    <div class="section">
+      <div class="section-title">Compétences Clés</div>
+      <div class="skills-grid">
+        <div class="skill-cell">Conseil client</div>
+        <div class="skill-cell">Techniques de vente</div>
+        <div class="skill-cell">Merchandising</div>
+        <div class="skill-cell">Stylisme</div>
+        <div class="skill-cell">Personal branding</div>
+        <div class="skill-cell">Création de contenu</div>
+        <div class="skill-cell">Montage vidéo</div>
+        <div class="skill-cell">Fidélisation client</div>
+        <div class="skill-cell">Clientèle internationale</div>
+        <div class="skill-cell">Visual merchandising</div>
+      </div>
+    </div>
+
+    <!-- LANGUES -->
+    <div class="section">
+      <div class="section-title">Langues</div>
+      <div class="langues-row">
+        <div class="langue-item">
+          <span class="langue-name">Français</span>
+          <span class="langue-level">Langue maternelle</span>
+        </div>
+        <div class="langue-item">
+          <span class="langue-name">Anglais</span>
+          <span class="langue-level">Niveau professionnel (C1)</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
